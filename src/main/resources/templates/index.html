@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>ブログ</title></head>
+<body>
+  <h1>投稿一覧</h1>
+  <form method="post" action="/post">
+    <input type="text" name="title" placeholder="タイトル">
+    <textarea name="content" placeholder="本文"></textarea>
+    <button type="submit">投稿</button>
+  </form>
+  <ul>
+    <li th:each="post : ${posts}">
+      <h3 th:text="${post.title}"></h3>
+      <p th:text="${post.content}"></p>
+      <form method="post" action="/delete">
+        <input type="hidden" name="id" th:value="${post.id}">
+        <button type="submit">削除</button>
+      </form>
+    </li>
+  </ul>
+</body>
+</html>

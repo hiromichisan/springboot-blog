@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>距離確認</title>
+    <style>
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .address-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .warning {
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .btn-next {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .current-address {
+            font-weight: bold;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>使用の本拠から駐車場までの距離確認</h2>
+        
+        <div class="address-info">
+            <h3>使用者住所（本拠）</h3>
+            <p class="current-address" th:text="${userAddress}">〒xxx-xxxx 東京都...</p>
+        </div>
+
+        <form th:action="@{/vehicle/check-distance}" method="post" id="distanceForm">
+            <div class="form-group">
+                <label for="parkingAddress">駐車場住所:</label>
+                <input type="text" 
+                       id="parkingAddress" 
+                       name="parkingAddress" 
+                       th:value="${parkingAddress}"
+                       required>
+            </div>
+
+            <div class="warning" id="distanceWarning">
+                指定の駐車場は使用の本拠から2km以上離れているため、車庫証明を取得できません。
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-back" onclick="history.back()">戻る</button>
+                <button type="submit" class="btn btn-next">確認</button>
+            </div>
+        </form>
+    </div>
+
+    <script th:inline="javascript">
+        // Thymeleafから渡されたエラーフラグを確認
+        const isOutOfRange = /*[[${isOutOfRange}]]*/ false;
+        
+        if (isOutOfRange) {
+            document.getElementById('distanceWarning').style.display = 'block';
+        }
+    </script>
+</body>
+</html> 

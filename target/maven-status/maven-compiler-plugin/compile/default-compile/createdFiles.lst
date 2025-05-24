@@ -1,0 +1,5 @@
+com\example\mapdemo\MapdemoApplication.class
+com\example\mapdemo\controller\BlogController.class
+com\example\mapdemo\service\BlogService.class
+com\example\mapdemo\entity\BlogPost.class
+com\example\mapdemo\mapper\BlogMapper.class
